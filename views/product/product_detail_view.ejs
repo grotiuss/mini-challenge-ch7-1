@@ -1,0 +1,30 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/stylesheets/product/product_detail.css">
+</head>
+
+<%- include('../partials/navbar') %>
+
+<h3 class='text-center mt-4'>Product Detail</h3>
+
+<div class="row justify-content-between mt-4">
+    <div class="col-md-5 col-xl-6 text-center">
+        <img id="product_detail_image" src="https://softwaremathematics.com/wp-content/uploads/2021/02/ultimate-guide-to-your-product-launch.jpg" alt="Product.jpg">
+    </div>
+    <div class="col-md-5 col-xl-6">
+        <div id="product_detail_text">
+            <h1 class='text-center mt-5'> <%= content.title %> </h1>
+            <h4 class='text-center'> <%= content.ProductCategory.name %> </h4>
+            <p class='text-center'> <%= content.description %> </p>
+            <div class="row justify-content-between">
+                <div class="col-5 col-xl-6 text-end">
+                    <h3>$<%= content.price %></h3>
+                </div>
+                <div class="col-5 col-xl-6 text-start">
+                    <button type="button" class="btn btn-light">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

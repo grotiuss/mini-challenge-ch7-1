@@ -1,0 +1,67 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/stylesheets/order/order_detail.css">
+</head>
+
+<%- include('../partials/navbar') %>
+
+<h3 class="text-center mt-4">Order Detail</h3>
+
+<div class="row justify-content-between mt-4">
+    <div class="col-md-5 col-xl-6 text-center">
+        <img id="product_detail_image" src="https://softwaremathematics.com/wp-content/uploads/2021/02/ultimate-guide-to-your-product-launch.jpg" alt="Product.jpg">
+    </div>
+    <div class="col-md-5 col-xl-6">
+        <div id="product_detail_text">
+            <h1 class='text-center mt-5'> <%= content.orderDetail.Product.title %> </h1>
+            <h4 class='text-center'> <%= content.orderDetail.Product.ProductCategory.name %> </h4>
+            <p class='text-center'> <%= content.orderDetail.Product.description %> </p>
+            <div class="row justify-content-center">
+                <div class="col-5 col-xl-6 text-end">
+                    <h5>Price</h5>
+                </div>
+                <div class="col-5 col-xl-6 text-start">
+                    <p><%= content.orderDetail.Product.price %></p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-5 col-xl-6 text-end">
+                    <h5>Qty</h5>
+                </div>
+                <div class="col-5 col-xl-6 text-start">
+                    <p><%= content.orderDetail.qty %></p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-5 col-xl-6 text-end">
+                    <h5>Total Price</h5>
+                </div>
+                <div class="col-5 col-xl-6 text-start">
+                    <p><b><%= content.orderDetail.price %></b></p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-12 col-xl-12 text-center">
+                    <h5>- by. <%= content.orderDetail.User.username %> -</h5>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <% if (content.orderDetail.transaction_status == 'WAITING') {%>
+                    <div class="col-12 col-xl-12 text-center" style="color: blue">
+                        <h2>-- <%= content.orderDetail.transaction_status %> --</h2>
+                    </div>
+                <% } else if (content.orderDetail.transaction_status == 'DONE') { %>
+                    <div class="col-12 col-xl-12 text-center" style="color: rgb(23, 228, 4)">
+                        <h2>-- <%= content.orderDetail.transaction_status %> --</h2>
+                    </div>
+                <% } else { %>
+                    <div class="col-12 col-xl-12 text-center" style="color: red">
+                        <h2>-- <%= content.orderDetail.transaction_status %> --</h2>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<%- include('../partials/footer') %>

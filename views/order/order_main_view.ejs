@@ -1,0 +1,74 @@
+<%- include('../partials/header') %>
+</head>
+
+<%- include('../partials/navbar') %>
+
+<div class="container">
+    <h3 class = 'text-center'>Order List</h3>
+
+    <div class="row justify-content-between mt-3">
+        <div class="col-md-3"></div>
+        <div class="col-md-3 text-end">
+            <a href="/order/create" type="button" class="btn btn-dark btn-sm">Create Order</a>
+        </div>
+    </div>
+    <table class="table mt-3">
+        <thead>
+          <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Id</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Customer (username)</th>
+            <th scope="col">Qty</th>
+            <th scope="col">Price</th>
+            <th scope="col">Status</th>
+            <th scope="col"><b>Action</b></th>
+          </tr>
+        </thead>
+        <tbody>
+            <% var no = 0 %>
+            <% content.orders.forEach( order => { %>
+                <tr>
+                    <th scope="row" style="color: grey"><%= ++no %></th>
+                    <th scope="row"><%= order.id %></th>
+                    <td><%= order.Product.title %></td>
+                    <td><%= order.User.username %></td>
+                    <td><%= order.qty %></td>
+                    <td><%= order.price %></td>
+                    <td><%= order.transaction_status %></td>
+                    <td>
+                        <!-- <div class="row justify-content-start">
+                            <div class="col-4">
+                                <a href="/order/detail/<%= order.id %>" type="button" class="btn btn-primary btn-sm">Detail</a>
+                            </div>
+
+                            <% if( order.transaction_status == 'WAITING' ) { %>
+                                <div class="col-4">
+                                    <a href="/order/update/done/<%= order.id %>" type="button" class="btn btn-danger btn-sm">Finish</a>
+                                </div>
+                                <div class="col-4">
+                                    <a href="/order/update/cancel/<%= order.id %>" type="button" class="btn btn-danger btn-sm">Cancel</a>
+                                </div>
+                            <% } else if( order.transaction_status == 'CANCELED' ) {%>
+                                <div class="col-4">
+                                    <a href="/order/update/cancel/<%= order.id %>" type="button" class="btn btn-danger btn-sm">Delete</a>
+                                </div>
+                            <% } %>
+                        </div> -->
+
+                        <a href="/order/detail/<%= order.id %>" type="button" class="btn btn-primary btn-sm">Detail</a>
+                        <% if( order.transaction_status == 'WAITING' ) { %>
+                            <a href="/order/update/done/<%= order.id %>" type="button" class="btn btn-success btn-sm">Finish</a>
+                            <a href="/order/update/cancel/<%= order.id %>" type="button" class="btn btn-warning btn-sm">Cancel</a>
+                        <% } else if( order.transaction_status == 'CANCELED' ) {%>
+                            <a href="/order/delete/<%= order.id %>" type="button" class="btn btn-danger btn-sm">Delete</a>
+                        <% } %>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+      </table>
+</div>
+
+
+<%- include('../partials/footer') %>

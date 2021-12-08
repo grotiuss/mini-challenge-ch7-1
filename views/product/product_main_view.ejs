@@ -1,0 +1,56 @@
+<%- include('../partials/header') %>
+</head>
+
+<%- include('../partials/navbar') %>
+
+<div class="container">
+    <h3 class = 'text-center'>Product List</h3>
+
+    <div class="row justify-content-between mt-3">
+        <div class="col-md-3"></div>
+        <div class="col-md-3 text-end">
+            <a href="/product/create" type="button" class="btn btn-dark btn-sm">Create Product</a>
+        </div>
+    </div>
+    <table class="table mt-3">
+        <thead>
+          <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Category</th>
+            <th scope="col">Description</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Price</th>
+            <th scope="col"><b>Action</b></th>
+          </tr>
+        </thead>
+        <tbody>
+            <% var no = 0 %>
+            <% orders.forEach( order => { %>
+                <tr>
+                    <th scope="row" style="color: grey"><%= ++no %></th>
+                    <th scope="row"><%= order.id %></th>
+                    <td><%= order.title %></td>
+                    <td><%= order.ProductCategory.name %></td>
+                    <td><%= order.description %></td>
+                    <td><%= order.stock %></td>
+                    <td><%= order.price %></td>
+                    <td>
+                        <div class="row">
+                            <div class="col-5">
+                                <a href="/product/detail/<%= order.id %>" type="button" class="btn btn-primary btn-sm">Detail</a>
+                            </div>
+                            <div class="col-5">
+                                <a href="/product/update/<%= order.id %>" type="button" class="btn btn-danger btn-sm">Update</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+      </table>
+</div>
+
+
+<%- include('../partials/footer') %>

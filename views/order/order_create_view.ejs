@@ -1,0 +1,40 @@
+<%- include('../partials/header') %>
+</head>
+
+<%- include('../partials/navbar') %>
+
+<h3 class="text-center mt-4">Create Order</h3>
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8">
+        <form action="/order/create" method="post">
+            <div class="mb-3">
+                <label for="userId" class="form-label">User</label>
+                <select class="form-select" name="userId" id="userId" aria-label="Default select example" required>
+                    <option value="" selected>-- Select user --</option>
+                    <% content.userList.forEach( user => { %>
+                        <option value="<%= user.id %>"><%= user.username %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="productId" class="form-label">Product Name</label>
+                <select class="form-select" name="productId" id="productId" aria-label="Default select example" required>
+                    <option value="" selected>-- Select product --</option>
+                    <% content.productList.forEach( product => { %>
+                        <option value="<%= product.id %>"><%= product.title %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="qty" class="form-label">Qty</label>
+                <input type="number" class="form-control" name="qty" id="qty" min="1" max="10" placeholder="0" required>
+            </div>
+            <div class="mb-3 text-end">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

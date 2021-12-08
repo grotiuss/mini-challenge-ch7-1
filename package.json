@@ -1,0 +1,21 @@
+{
+  "name": "mini-challenge-ch-7-1",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npx nodemon ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "faker": "^5.5.3",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.15",
+    "pg": "^8.7.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.12.0-beta.1"
+  }
+}

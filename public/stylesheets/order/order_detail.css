@@ -1,0 +1,56 @@
+
+
+/* // `sm` applies to x-small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+    #product_detail_image {
+        width: 15em;
+        /* height: 300px; */
+        object-fit: contain;
+        object-position: 50% 30%;
+    }
+    #product_detail_text{
+        object-position: 50% 10%;
+    }
+}
+
+/* // `md` applies to small devices (landscape phones, less than 768px) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    #product_detail_image {
+        width: 20em;
+        /* height: 300px; */
+        object-fit: contain;
+        object-position: 50% 30%;
+    }
+    #product_detail_text{
+        object-position: 50% 10%;
+    }
+}
+
+/* // `lg` applies to medium devices (tablets, less than 992px) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    #product_detail_image {
+        width: 25em;
+        height: 20em;
+        object-fit: contain;
+        object-position: 50% 50%;
+    }
+    #product_detail_text{
+        object-position: 50% 10%;
+    }
+}
+
+/* // `xl` applies to large devices (desktops, less than 1200px) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    #product_detail_image {
+        width: 25em;
+        height: 20em;
+        object-fit: contain;
+        object-position: 50% 50%;
+    }
+    #product_detail_text{
+        object-position: 50% 10%;
+    }
+}
+
+/* // `xxl` applies to x-large devices (large desktops, less than 1400px) */
+@media (max-width: 1399.98px) {}
