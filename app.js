@@ -12,6 +12,7 @@ var registerRouter = require('./routes/register');
 
 var productRouter = require('./routes/product');
 var orderRouter = require('./routes/order');
+var reviewRouter = require('./routes/review');
 
 var app = express();
 
@@ -39,6 +40,7 @@ app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
 app.use('/register', registerRouter);
 app.use('/users', usersRouter);
+app.use('/review', reviewRouter);
 
 app.use('/product', productRouter);
 app.use('/order', orderRouter)
