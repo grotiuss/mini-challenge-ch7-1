@@ -1,0 +1,30 @@
+<%- include('../partials/header') %>
+</head>
+
+<%- include('../partials/navbar') %>
+
+<h3 class="text-center mt-4">Create Review</h3>
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8">
+        <form action="/review/update/<%= content.detail.id %>" method="post">
+            <div class="mb-3">
+                <label for="product" class="form-label">Product Name</label>
+                <input type="text" class="form-control" name="product" id="product"  value="<%= content.detail.Product.title %>" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="rating" class="form-label">Rating</label>
+                <input type="number" class="form-control" name="rating" id="rating" min="1" max="5" placeholder="0" value="<%= content.detail.rating %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="review" class="form-label">Review</label>
+                <textarea class="form-control" name="review" id="review" rows="3"><%= content.detail.review %></textarea>
+            </div>
+            <div class="mb-3 text-end">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>
