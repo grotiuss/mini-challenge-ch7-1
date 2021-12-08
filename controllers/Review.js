@@ -14,18 +14,6 @@
         categories: await navbarInformation.get_category()
      }
  }
-
- const f = {
-     total_price: async(productId, qty) => {
-         try{
-            var findProduct = await Product.findByPk(productId)
-            const result = findProduct.price * qty
-            return result
-         } catch (err) {
-            return 'f.total_price error'
-         }
-     }
- }
  
  const review = {
      all: async() => {
@@ -33,7 +21,9 @@
      },
      index: async(req, res) => {
          try {
-             res.status(200).json({msg: 'Ini halaman review'})
+             var data = await main_component()
+             res.render('review/review_main_view', data)
+            //  res.status(200).json({msg: 'Ini halaman review'})
          } catch (err) {
              res.status(200).json({msg: 'reviewController error'})
          }
