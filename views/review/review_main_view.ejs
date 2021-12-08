@@ -1,0 +1,56 @@
+<%- include('../partials/header') %>
+</head>
+
+<%- include('../partials/navbar') %>
+
+<div class="container">
+    <h3 class = 'text-center'>Review List</h3>
+
+    <div class="row justify-content-between mt-3">
+        <div class="col-md-3"></div>
+        <div class="col-md-3 text-end">
+            <a href="/review/create" type="button" class="btn btn-dark btn-sm">Create Review</a>
+        </div>
+    </div>
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Id</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Rating</th>
+                <th scope="col">Review</th>
+                <th scope="col"><b>Action</b></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% var no = 0 %>
+            <% content.reviews.forEach( review =>{ %>
+                <tr>
+                    <td><%= ++no %></td>
+                    <td><%= review.id %></td>
+                    <td>
+                      <a href="/product/detail/<%= review.Product.id %>" target="_blank">
+                        <%= review.Product.title %>
+                      </a>
+                    </td>
+                    <td><%= review.rating %></td>
+                    <td><%= review.review %></td>
+                    <td>
+                        <div class="row">
+                          <div class="col-6">
+                            <a href="/review/update/<%= review.id %>" type="button" class="btn btn-success btn-sm">Edit</a>
+                          </div>
+                          <div class="col-6">
+                            <a href="/review/delete/<%= review.id %>" type="button" class="btn btn-warning btn-sm">Delete</a>
+                          </div>
+                        </div>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+
+
+<%- include('../partials/footer') %>

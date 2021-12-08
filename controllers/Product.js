@@ -1,5 +1,5 @@
 /**
- *  Home Controller
+ *  Product Controller
  * 
  * @author Grotius Cendikia Hasiholan <grotius.hasiholan@gmail.com>
  */
