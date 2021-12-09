@@ -14,6 +14,8 @@ router.get('/create', productController.create)
 router.get('/update/:id', productController.update)
 router.get('/update', productController.updateInvalid)
 
+router.get('/test', productController.getReviewTest)
+
 router.post('/create', productController.createInput)
 router.post('/update/:id', productController.updateInput)
 
