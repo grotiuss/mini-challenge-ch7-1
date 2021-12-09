@@ -10,20 +10,7 @@
  const f = {
      test: () => {
          console.log('Test controller is acitive')
-     },
-     get_category: async() => {
-         var result = await ProductCategory.findAll()
-         return result
-     },
-     get_new_products: async() => {
-         var result = await Product.findAll({ 
-             include: ProductCategory ,
-             order: [
-                 ['createdAt', 'DESC']
-             ]
-         })
-         return result.slice(0,4)
-     },
+     }
  }
  
  const login = {
@@ -32,15 +19,44 @@
      },
      index: async(req, res) => {
          var data = {
-             title: 'Login',
-             categories: await f.get_category(),
-             newProductList: await f.get_new_products()
+             title: 'Login'
          }
          try {
              res.render('login_view', data)
              // res.send(data.productList)
          } catch (error) {
              res.send(error)
+         }
+     },
+     loginPost: async(req, res) => {
+         try {
+            var input = {
+                username: req.body.username,
+                password: req.body.password
+             }
+            var findUser = await User.findOne({
+                where: { username: req.body.username }
+            })
+
+            if(findUser) {
+                if(findUser.password == input.password) {
+                    req.user_session.id = findUser.id
+                    res.redirect('/')
+                    // res.status(200).json(findUser)
+                } else {
+                    res.status(200).json(
+                        {msg: 'Password yang anda masukkan salah'}
+                    )
+                }
+            } else {
+                res.status(400).json({
+                    msg: 'Data tidak ditemukan'
+                })
+            }
+         } catch (error) {
+             res.status(500).json({
+                 msg: 'loginPost error'
+             })
          }
      }
  }

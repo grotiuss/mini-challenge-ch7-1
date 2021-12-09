@@ -8,10 +8,11 @@
  const { User, Product, Order, ProductCategory, Review } = require('../models')
  const navbarInformation = require('./api/navbarInformation')
 
- const main_component = async() => {
+ const main_component = async(req) => {
      return {
         title: 'Reviews',
-        categories: await navbarInformation.get_category()
+        categories: await navbarInformation.get_category(),
+        user_session: await navbarInformation.get_user_session(req.user_session.id)
      }
  }
  
@@ -26,7 +27,7 @@
      },
      index: async(req, res) => {
          try{
-             var data = await main_component()
+             var data = await main_component(req)
              data.content = {
                 reviews: await Review.findAll({
                     attributes: f.reviewColumns,
@@ -68,7 +69,7 @@
      },
      create: async(req, res) => {
         try {
-            var data = await main_component()
+            var data = await main_component(req)
             data.content = {
                 productList: await Product.findAll()
             }
@@ -101,7 +102,7 @@
      },
      update: async(req, res) => {
          try {
-             var data = await main_component()
+             var data = await main_component(req)
              var findReview = await Review.findOne({
                 where: { id: req.params.id },
                 include: {model: Product},

@@ -8,10 +8,11 @@
  const { User, Product, Order, ProductCategory } = require('../models')
  const navbarInformation = require('./api/navbarInformation')
 
- const main_component = async() => {
+ const main_component = async(req) => {
      return {
         title: 'Orders',
-        categories: await navbarInformation.get_category()
+        categories: await navbarInformation.get_category(),
+        user_session: await navbarInformation.get_user_session(req.user_session.id)
      }
  }
 
@@ -33,7 +34,7 @@
      },
      index: async(req, res) => {
          try {
-             var data = await main_component()
+             var data = await main_component(req)
              data.content = {
                  orders : await Order.findAll({
                      include: [
@@ -57,7 +58,7 @@
      },
      create: async(req, res) => {
          try{
-             var data = await main_component()
+             var data = await main_component(req)
              data.content = {
                  userList : await User.findAll(),
                  productList: await Product.findAll(),
@@ -97,7 +98,7 @@
     },
     detail: async(req, res) => {
         try {
-            const data = await main_component()
+            const data = await main_component(req)
             const findOrder = await Order.findOne({
                 where: {id: req.params.id},
                 include: [

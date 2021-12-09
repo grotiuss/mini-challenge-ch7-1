@@ -14,6 +14,27 @@
      get_category: async() => {
          var result = await ProductCategory.findAll()
          return result
+     },
+     get_user_session: async(userId) => {
+         try {
+             if(!userId) {
+                 return {
+                     id: undefined,
+                     username: undefined,
+                     asAdmin: false
+                 }
+             }
+             var result = await User.findOne({
+                 where: { id: userId },
+                 attributes: ['id', 'username', 'asAdmin']
+             })
+             return result
+
+         } catch (error) {
+             return {
+                 msg: 'get_user_session method in navbarInformation is error'
+             }
+         }
      }
  }
  
