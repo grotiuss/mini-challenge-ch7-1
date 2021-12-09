@@ -30,7 +30,15 @@
                         <a class="nav-link" href="/product">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/order">Orders</a>
+                        <a class="nav-link position-relative" href="/order" >
+                            Orders
+                            <% if(user_session.id && order_count>0) {%>
+                            <span class="position-absolute top-10 start-100 translate-middle badge rounded-pill bg-danger">
+                                <%= order_count %>
+                                <span class="visually-hidden">order waiting</span>
+                            </span>
+                            <% } %>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/review">Reviews</a>
@@ -40,6 +48,9 @@
 
                     <% if(user_session.id) { %>
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><b><%= user_session.username %></b></a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/logout">Logout</a>
                             </li>

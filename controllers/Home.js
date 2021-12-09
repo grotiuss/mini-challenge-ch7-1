@@ -28,7 +28,8 @@ const main_component = async(req) => {
     return {
         title: 'Home',
         categories: await navbarInformation.get_category(),
-        user_session: await navbarInformation.get_user_session(req.user_session.id)
+        user_session: await navbarInformation.get_user_session(req.user_session.id),
+        order_count: await navbarInformation.get_order_count(req.user_session.id)
     }
 }
 
@@ -47,6 +48,18 @@ const home = {
         } catch (error) {
             res.status(500).json(
                 {msg: 'index method in homeController is error'}
+            )
+        }
+    },
+    test_counter: async(req, res) => {
+        try {
+            const data = {
+                count: await navbarInformation.get_order_count(req.user_session.id)
+            }
+            res.status(200).json(data)
+        } catch (error) {
+            res.status(500).json(
+                {msg: 'error test method in homeController'}
             )
         }
     }
