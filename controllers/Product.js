@@ -5,13 +5,30 @@
  */
 
  var fs = require('fs');
- const { User, Product, Order, ProductCategory } = require('../models')
+ const { User, Product, Order, ProductCategory, Review } = require('../models')
  const navbarInformation = require('./api/navbarInformation')
 
  const main_component = async() => {
      return {
         title: 'Products',
         categories: await navbarInformation.get_category()
+     }
+ }
+
+ const f = {
+     getReviews: async(productId) => {
+         try {
+             var result = await Review.findAll({
+                 where: {
+                     product_id: productId
+                 }
+            })
+             return result
+         } catch (err) {
+             return ({
+                 msg: 'function error'
+             })
+         }
      }
  }
  
@@ -37,9 +54,10 @@
             include: ProductCategory,
             where: { id: req.params.id }
          })
+        data.reviews = await f.getReviews(req.params.id)
         res.render('product/product_detail_view', data)
         // res.status(200).json(
-        //     data.content
+        //     data.reviews
         // )
     },
     detailInvalid: (req, res) => {
@@ -101,6 +119,16 @@
     },
     updateInvalid: (req, res) => {
         res.redirect('/product')
+    },
+    getReviewTest: async(req, res) => {
+        try {
+            var result = await f.getReviews(1)
+            res.status(200).json(result)
+        } catch (err) {
+            res.status(500).json(
+                {msg: 'getReview test controller is error'}
+            )
+        }
     }
  }
  
