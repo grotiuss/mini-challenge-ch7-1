@@ -18,7 +18,7 @@ var app = express();
 
 //User information
 var user_session = {
-  id: 123
+  id: undefined
 }
 
 // view engine setup
@@ -31,19 +31,27 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', (req, res, next) => {
+app.use((req, res, next) => {
+  console.log(user_session)
   req.user_session = user_session
   next()
-}, homeRouter);
+})
+
+// app.use('/', (req, res, next) => {
+//   req.user_session = user_session
+//   next()
+// }, homeRouter);
+
+app.use('/', homeRouter)
 
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
 app.use('/register', registerRouter);
 app.use('/users', usersRouter);
-app.use('/review', reviewRouter);
 
+app.use('/review', reviewRouter);
 app.use('/product', productRouter);
-app.use('/order', orderRouter)
+app.use('/order', orderRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -37,14 +37,28 @@
                     </li>
                 </ul>
                 <div class="d-flex">
+
+                    <% if(user_session.id) { %>
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout">Logout</a>
+                            </li>
+                            <% if(user_session.asAdmin) {%>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Admin</a>
+                                </li>
+                            <% } %>
+                        </ul>
+                    <% } else { %>        
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link" href="/login">Login</a>
                         </li>
-                        <li class="nav-item">
+                         <li class="nav-item">
                             <a class="nav-link" href="/register">Register</a>
-                        </li>
+                         </li>
                     </ul>
+                    <% } %>
                 </div>
             </div>
         </div>

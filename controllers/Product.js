@@ -8,10 +8,11 @@
  const { User, Product, Order, ProductCategory, Review } = require('../models')
  const navbarInformation = require('./api/navbarInformation')
 
- const main_component = async() => {
+ const main_component = async(req) => {
      return {
         title: 'Products',
-        categories: await navbarInformation.get_category()
+        categories: await navbarInformation.get_category(),
+        user_session: await navbarInformation.get_user_session(req.user_session.id)
      }
  }
 
@@ -38,7 +39,7 @@
      },
      index: async(req, res) => {
 
-        var data = await main_component()
+        var data = await main_component(req)
         data.orders = await Product.findAll(
             { 
                 include: ProductCategory,
@@ -49,7 +50,7 @@
         //  res.status(200).json(data)
      },
      detail: async(req, res) => {
-        var data = await main_component()
+        var data = await main_component(req)
         data.content = await Product.findOne({ 
             include: ProductCategory,
             where: { id: req.params.id }
@@ -64,7 +65,7 @@
         res.redirect('/product')
     },
     create: async(req, res) => {
-        var data = await main_component()
+        var data = await main_component(req)
         data.content = {
             productCategory: await ProductCategory.findAll()
         }
@@ -88,7 +89,7 @@
             })
     },
     update: async(req, res) => {
-        var data = await main_component()
+        var data = await main_component(req)
         data.content = {
             detail: await Product.findOne({ include: ProductCategory, where: { id: req.params.id } }),
             productCategory: await ProductCategory.findAll()

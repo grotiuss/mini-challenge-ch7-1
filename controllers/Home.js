@@ -7,13 +7,11 @@
 var fs = require('fs');
 const { User, Product, Order, ProductCategory } = require('../models')
 
+const navbarInformation = require('./api/navbarInformation')
+
 const f = {
     test: () => {
         console.log('Test controller is acitive')
-    },
-    get_category: async() => {
-        var result = await ProductCategory.findAll()
-        return result
     },
     get_new_products: async() => {
         var result = await Product.findAll({ 
@@ -23,7 +21,15 @@ const f = {
             ]
         })
         return result.slice(0,4)
-    },
+    }
+}
+
+const main_component = async(req) => {
+    return {
+        title: 'Home',
+        categories: await navbarInformation.get_category(),
+        user_session: await navbarInformation.get_user_session(req.user_session.id)
+    }
 }
 
 const home = {
@@ -31,16 +37,17 @@ const home = {
         //do nothing
     },
     index: async(req, res) => {
-        var data = {
-            title: 'Home',
-            categories: await f.get_category(),
-            newProductList: await f.get_new_products()
-        }
         try {
+            var data = await main_component(req)
+            data.content = {
+                newProductList: await f.get_new_products()
+            }
             res.render('home_view', data)
-            // res.send(data.productList)
+            // res.status(200).json(data)
         } catch (error) {
-            res.send(error)
+            res.status(500).json(
+                {msg: 'index method in homeController is error'}
+            )
         }
     }
 }
