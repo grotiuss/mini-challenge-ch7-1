@@ -44,14 +44,11 @@
                     res.redirect('/')
                     // res.status(200).json(findUser)
                 } else {
-                    res.status(200).json(
-                        {msg: 'Password yang anda masukkan salah'}
-                    )
+                    res.redirect('/login')
                 }
             } else {
-                res.status(400).json({
-                    msg: 'Data tidak ditemukan'
-                })
+                f.note = 'Login Failed'
+                res.redirect('/login')
             }
          } catch (error) {
              res.status(500).json({

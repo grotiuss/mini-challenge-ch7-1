@@ -4,8 +4,9 @@
  * @author Grotius Cendikia Hasiholan <grotius.hasiholan@gmail.com>
  */
 
- var fs = require('fs');
- const { User, Product, Order, ProductCategory } = require('../../models')
+ const res = require('express/lib/response');
+var fs = require('fs');
+ const { User, Product, Order, ProductCategory, user } = require('../../models')
  
  const navbarInfo = {
      test: () => {
@@ -33,6 +34,20 @@
          } catch (error) {
              return {
                  msg: 'get_user_session method in navbarInformation is error'
+             }
+         }
+     },
+     get_order_count: async(userId) => {
+         try {
+             const result = await Order.findAll({ 
+                 where: { 
+                     user_id: userId,
+                     transaction_status: 'WAITING'
+                    } })
+             return result.length
+         } catch (error) {
+             return {
+                 msg: 'get_order_count method in navbarInformation (api) is error'
              }
          }
      }
