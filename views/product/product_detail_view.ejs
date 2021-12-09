@@ -4,7 +4,7 @@
 
 <%- include('../partials/navbar') %>
 
-<h3 class='text-center mt-4'>Product Detail</h3>
+<h2 class='text-center mt-4'>Product Detail</h2>
 
 <div class="row justify-content-between mt-4">
     <div class="col-md-5 col-xl-6 text-center">
@@ -24,6 +24,22 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="row justify-content-center mt-5">
+    <div class="col-12">
+        <h3 class="text-center">-- Reviews --</h3>
+        <table class="table mt-4">
+            <tbody>
+                <% var no = 0 %>
+                <% reviews.forEach( review => { %>
+                    <tr>
+                        <td><%= review.review %></td>
+                        <td><%= review.rating %> &#9733 </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+          </table>
     </div>
 </div>
 

@@ -40,7 +40,7 @@
 }
 
 /* // `xl` applies to large devices (desktops, less than 1200px) */
-@media (min-width: 992px) and (max-width: 1199.98px) {
+@media (min-width: 992px) {
     #product_detail_image {
         width: 25em;
         height: 20em;
