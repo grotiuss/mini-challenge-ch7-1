@@ -36,17 +36,34 @@
      index: async(req, res) => {
          try {
              var data = await main_component(req)
-             data.content = {
-                 orders : await Order.findAll({
-                     include: [
-                         {model: Product},
-                         {model: User}
-                     ],
-                     order: [
-                         ['updatedAt', 'DESC']
-                     ]
-                 })
+
+             if(data.user_session.id) {
+                 data.content = {
+                    orders : await Order.findAll({
+                        where: { user_id: data.user_session.id },
+                        include: [
+                            {model: Product},
+                            {model: User}
+                        ],
+                        order: [
+                            ['updatedAt', 'DESC']
+                        ]
+                    })
+                 }    
+             } else {
+                 data.content = {
+                     orders : await Order.findAll({
+                         include: [
+                             {model: Product},
+                             {model: User}
+                         ],
+                         order: [
+                             ['updatedAt', 'DESC']
+                         ]
+                     })
+                 }
              }
+
              res.render('order/order_main_view', data)
 
             // res.status(200).json(data.content.orders)
@@ -95,6 +112,17 @@
             // res.status(200).json(input)
         } catch (err) {
             res.status(500).json({msg: 'Sedang terjadi error'})
+        }
+    },
+    orderProduct: async(req, res) => {
+        try {
+            const data = main_component(req)
+            var result = await Product.findByPk(req.params.id)
+            res.status(200).json(result)
+        } catch (error) {
+            res.status(500).json(
+                { msg: 'orderProduct method in orderController is error' }
+            )
         }
     },
     detail: async(req, res) => {

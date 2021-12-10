@@ -2,7 +2,7 @@
 
 var faker = require('faker')
 
-const reviews = [...Array(100)].map( (review) => (
+const reviews = [...Array(3000)].map( (review) => (
   {
     product_id: Math.floor(Math.random() * 100) + 1,
     rating: Math.floor(Math.random() * 5) + 1,

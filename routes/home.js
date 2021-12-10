@@ -6,6 +6,6 @@ var router = express.Router();
 const homeController = require('../controllers/Home')
 
 router.get('/', homeController.index)
-// router.get('/test', homeController.test_counter)
+router.get('/test', homeController.test_counter_bulk)
 
 module.exports = router;
