@@ -16,7 +16,7 @@
                 <p class="card-text" style="font-size: small;"><%= product.description %></p>
                 <h5>$<%= product.price %></h5>
                 <a href="/product/detail/<%= product.id %>" class="btn btn-primary">See Product</a>
-                <a href="#" class="btn btn-danger">Add to Cart</a>
+                <a href="/order/add/<%= product.id %>" class="btn btn-danger">Add to Cart</a>
             </div>
         </div>
     <% }) %>
@@ -35,8 +35,8 @@
                 <h5 class="card-title"><%= product.title %></h5>
                 <h6 class="card-subtitle mb-2 text-muted"><%= product.category_name %></h6>
                 <p class="card-text" style="font-size: small;"><%= product.description %></p>
-                <a href="#" class="btn btn-primary">See Product</a>
-                <a href="#" class="btn btn-danger">Add to Cart</a>
+                <a href="/product/detail/<%= product.id %>" class="btn btn-primary">See Product</a>
+                <a href="/order/add/<%= product.id %>" class="btn btn-danger">Add to Cart</a>
             </div>
         </div>
     <% }) %>

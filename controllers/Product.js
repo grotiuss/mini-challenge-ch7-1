@@ -23,7 +23,10 @@
              var result = await Review.findAll({
                  where: {
                      product_id: productId
-                 }
+                 },
+                 order: [
+                     ['rating', 'DESC']
+                 ]
             })
              return result
          } catch (err) {

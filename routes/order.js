@@ -9,6 +9,7 @@ const orderController = require('../controllers/Order')
 
 router.get('/', orderController.index)
 router.get('/create', orderController.create)
+router.get('/add/:id', orderController.orderProduct)
 router.get('/detail/:id', orderController.detail)
 router.get('/detail', orderController.detailInvalid)
 router.get('/update/done/:id', orderController.updateDone)

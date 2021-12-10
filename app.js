@@ -18,7 +18,7 @@ var app = express();
 
 //User information
 var user_session = {
-  id: undefined
+  id: null
 }
 
 // view engine setup

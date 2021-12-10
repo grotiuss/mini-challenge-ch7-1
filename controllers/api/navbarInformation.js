@@ -20,8 +20,8 @@ var fs = require('fs');
          try {
              if(!userId) {
                  return {
-                     id: undefined,
-                     username: undefined,
+                     id: null,
+                     username: null,
                      asAdmin: false
                  }
              }
