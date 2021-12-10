@@ -13,7 +13,7 @@ function randomStatus() {
   }
 }
 
-const orders = [...Array(100)].map( (order) => (
+const orders = [...Array(5000)].map( (order) => (
   {
     product_id: Math.floor(Math.random() * 100) + 1,
     user_id: Math.floor(Math.random() * 100) + 1,
