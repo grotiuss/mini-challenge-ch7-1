@@ -1,5 +1,5 @@
 <%- include('partials/header') %>
-<link rel="stylesheet" href="/stylesheets/login/login_page.css">
+<link rel="stylesheet" href="/stylesheets/auth/login_page.css">
 </head>
 
 <body>
@@ -20,12 +20,12 @@
             <div class="mt-3">
                 <p id="login-note" class="text-center">Login page Note</p>
                 <form class="p-3" action="/auth/login" method="post">
-                    <div class="form-field d-flex align-items-center"> <span class="far fa-user"></span> <input type="text" name="username" id="username" placeholder="Username"> </div>
-                    <div class="form-field d-flex align-items-center"> <span class="fas fa-key"></span> <input type="password" name="password" id="password" placeholder="Password"> </div> 
+                    <div class="form-field d-flex align-items-center"> <span class="far fa-user"></span> <input type="text" name="username" id="username" placeholder="Username" required> </div>
+                    <div class="form-field d-flex align-items-center"> <span class="fas fa-key"></span> <input type="password" name="password" id="password" placeholder="Password" required> </div> 
                     <button class="btn mt-3">Login</button>
                 </form>
             </div>
-            <div class="text-center fs-6"> <a href="#">Forget password?</a> or <a href="#">Sign up</a> </div>
+            <div class="text-center fs-6"> <a href="#">Forget password?</a> or <a href="/auth/register">Sign up</a> </div>
         </div>
 
 <%- include('partials/footer') %>
