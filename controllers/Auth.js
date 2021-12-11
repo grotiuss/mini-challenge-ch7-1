@@ -80,6 +80,19 @@
         } catch (error) {
             res.send(error)
         }
+    },
+    registerPost: async(req, res) => {
+        try {
+            const input = {
+                username : req.body.username,
+                password : req.body.password,
+            }
+            res.status(200).json(input)
+        } catch (error){
+            res.status(500).json(
+                { msg: 'registerPost method in authContoller is error' }
+            )
+        }
     }
  }
  
