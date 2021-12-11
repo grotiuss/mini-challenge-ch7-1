@@ -116,9 +116,24 @@
     },
     orderProduct: async(req, res) => {
         try {
-            const data = main_component(req)
+            const data = await main_component(req)
             var result = await Product.findByPk(req.params.id)
-            res.status(200).json(result)
+            if(result) {
+                await Order.create({
+                    product_id: req.params.id,
+                    user_id: data.user_session.id,
+                    qty: 1,
+                    price: result.price,
+                    transaction_status: 'WAITING',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                })
+                    .then( () => {
+                        res.redirect('/order')
+                    })
+            } else {
+                res.redirect('/')
+            }
         } catch (error) {
             res.status(500).json(
                 { msg: 'orderProduct method in orderController is error' }
