@@ -6,9 +6,7 @@ var logger = require('morgan');
 
 var homeRouter = require('./routes/home');
 var usersRouter = require('./routes/users');
-var loginRouter = require('./routes/login');
-var logoutRouter = require('./routes/logout');
-var registerRouter = require('./routes/register');
+var authRouter = require('./routes/auth');
 
 var productRouter = require('./routes/product');
 var orderRouter = require('./routes/order');
@@ -44,9 +42,7 @@ app.use((req, res, next) => {
 
 app.use('/', homeRouter)
 
-app.use('/login', loginRouter);
-app.use('/logout', logoutRouter);
-app.use('/register', registerRouter);
+app.use('/auth', authRouter);
 app.use('/users', usersRouter);
 
 app.use('/review', reviewRouter);
