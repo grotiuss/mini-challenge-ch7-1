@@ -1,14 +1,14 @@
 var createError = require('http-errors');
 var express = require('express');
+var session = require('express-session')
+var flash = require('express-flash')
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var homeRouter = require('./routes/home');
 var usersRouter = require('./routes/users');
-var loginRouter = require('./routes/login');
-var logoutRouter = require('./routes/logout');
-var registerRouter = require('./routes/register');
+var authRouter = require('./routes/auth');
 
 var productRouter = require('./routes/product');
 var orderRouter = require('./routes/order');
@@ -16,10 +16,24 @@ var reviewRouter = require('./routes/review');
 
 var app = express();
 
-//User information
-var user_session = {
-  id: 123
-}
+//User information (akan diganti dengan passport session)
+// var user_session = {
+//   id: null
+// }
+
+app.use(session({
+    secret:'sdlalnqoihnaflk334asd',
+    resave: false,
+    saveUninitialized: false
+}))
+
+//Setting passport (dilakukan sebelum router dan view engine)
+const passport = require('./lib/passport')
+app.use(passport.initialize())
+app.use(passport.session())
+
+//setting flash
+app.use(flash())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -31,19 +45,25 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', (req, res, next) => {
-  req.user_session = user_session
-  next()
-}, homeRouter);
+// app.use((req, res, next) => {
+//   console.log(user_session)
+//   req.user_session = user_session
+//   next()
+// })
 
-app.use('/login', loginRouter);
-app.use('/logout', logoutRouter);
-app.use('/register', registerRouter);
+// app.use('/', (req, res, next) => {
+//   req.user_session = user_session
+//   next()
+// }, homeRouter);
+
+app.use('/', homeRouter)
+
+app.use('/auth', authRouter);
 app.use('/users', usersRouter);
-app.use('/review', reviewRouter);
 
+app.use('/review', reviewRouter);
 app.use('/product', productRouter);
-app.use('/order', orderRouter)
+app.use('/order', orderRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

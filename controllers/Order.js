@@ -8,12 +8,14 @@
  const { User, Product, Order, ProductCategory } = require('../models')
  const navbarInformation = require('./api/navbarInformation')
 
- const main_component = async() => {
-     return {
-        title: 'Orders',
-        categories: await navbarInformation.get_category()
-     }
- }
+ const main_component = async(req) => {
+    return {
+        title: 'Orders',  
+        categories: await navbarInformation.get_category(),
+        user_session: navbarInformation.get_user_session(req.user),
+        order_count: await navbarInformation.get_order_count(req.user)
+    }
+}
 
  const f = {
      total_price: async(productId, qty) => {
@@ -33,18 +35,35 @@
      },
      index: async(req, res) => {
          try {
-             var data = await main_component()
-             data.content = {
-                 orders : await Order.findAll({
-                     include: [
-                         {model: Product},
-                         {model: User}
-                     ],
-                     order: [
-                         ['updatedAt', 'DESC']
-                     ]
-                 })
+             var data = await main_component(req)
+
+             if(data.user_session.id) {
+                 data.content = {
+                    orders : await Order.findAll({
+                        where: { user_id: data.user_session.id },
+                        include: [
+                            {model: Product},
+                            {model: User}
+                        ],
+                        order: [
+                            ['updatedAt', 'DESC']
+                        ]
+                    })
+                 }    
+             } else {
+                 data.content = {
+                     orders : await Order.findAll({
+                         include: [
+                             {model: Product},
+                             {model: User}
+                         ],
+                         order: [
+                             ['updatedAt', 'DESC']
+                         ]
+                     })
+                 }
              }
+
              res.render('order/order_main_view', data)
 
             // res.status(200).json(data.content.orders)
@@ -57,7 +76,7 @@
      },
      create: async(req, res) => {
          try{
-             var data = await main_component()
+             var data = await main_component(req)
              data.content = {
                  userList : await User.findAll(),
                  productList: await Product.findAll(),
@@ -95,9 +114,35 @@
             res.status(500).json({msg: 'Sedang terjadi error'})
         }
     },
+    orderProduct: async(req, res) => {
+        try {
+            const data = await main_component(req)
+            var result = await Product.findByPk(req.params.id)
+            if(result) {
+                await Order.create({
+                    product_id: req.params.id,
+                    user_id: data.user_session.id,
+                    qty: 1,
+                    price: result.price,
+                    transaction_status: 'WAITING',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                })
+                    .then( () => {
+                        res.redirect('/order')
+                    })
+            } else {
+                res.redirect('/')
+            }
+        } catch (error) {
+            res.status(500).json(
+                { msg: 'orderProduct method in orderController is error' }
+            )
+        }
+    },
     detail: async(req, res) => {
         try {
-            const data = await main_component()
+            const data = await main_component(req)
             const findOrder = await Order.findOne({
                 where: {id: req.params.id},
                 include: [

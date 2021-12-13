@@ -8,12 +8,14 @@
  const { User, Product, Order, ProductCategory, Review } = require('../models')
  const navbarInformation = require('./api/navbarInformation')
 
- const main_component = async() => {
-     return {
-        title: 'Reviews',
-        categories: await navbarInformation.get_category()
-     }
- }
+ const main_component = async(req) => {
+    return {
+        title: 'Reviews',  
+        categories: await navbarInformation.get_category(),
+        user_session: navbarInformation.get_user_session(req.user),
+        order_count: await navbarInformation.get_order_count(req.user)
+    }
+}
  
  const f = {
     // for handling missing column error on Review Model :( 
@@ -26,7 +28,7 @@
      },
      index: async(req, res) => {
          try{
-             var data = await main_component()
+             var data = await main_component(req)
              data.content = {
                 reviews: await Review.findAll({
                     attributes: f.reviewColumns,
@@ -68,7 +70,7 @@
      },
      create: async(req, res) => {
         try {
-            var data = await main_component()
+            var data = await main_component(req)
             data.content = {
                 productList: await Product.findAll()
             }
@@ -101,7 +103,7 @@
      },
      update: async(req, res) => {
          try {
-             var data = await main_component()
+             var data = await main_component(req)
              var findReview = await Review.findOne({
                 where: { id: req.params.id },
                 include: {model: Product},

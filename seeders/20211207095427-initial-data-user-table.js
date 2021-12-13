@@ -2,20 +2,30 @@
 
 var faker = require('faker')
 
+const bcrypt = require('bcrypt')
+const encrypt = (password) => bcrypt.hashSync(password, 10)
+
 const users = [
   {
     username: 'grotius.hasiholan',
-    password: 'admin',
+    password: encrypt('admin'),
     asAdmin: true,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    username: 'grotius',
+    password: encrypt('user'),
+    asAdmin: false,
     createdAt: new Date(),
     updatedAt: new Date()
   }
 ]
 
-const users1 = [...Array(99)].map( (user) => (
+const users1 = [...Array(199)].map( (user) => (
   {
     username: faker.internet.userName(),
-    password: faker.internet.password(),
+    password: encrypt(faker.internet.password()),
     asAdmin: false,
     createdAt: new Date(),
     updatedAt: new Date()

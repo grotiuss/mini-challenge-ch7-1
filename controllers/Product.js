@@ -8,12 +8,14 @@
  const { User, Product, Order, ProductCategory, Review } = require('../models')
  const navbarInformation = require('./api/navbarInformation')
 
- const main_component = async() => {
-     return {
-        title: 'Products',
-        categories: await navbarInformation.get_category()
-     }
- }
+ const main_component = async(req) => {
+    return {
+        title: 'Products',  
+        categories: await navbarInformation.get_category(),
+        user_session: navbarInformation.get_user_session(req.user),
+        order_count: await navbarInformation.get_order_count(req.user)
+    }
+}
 
  const f = {
      getReviews: async(productId) => {
@@ -21,7 +23,10 @@
              var result = await Review.findAll({
                  where: {
                      product_id: productId
-                 }
+                 },
+                 order: [
+                     ['rating', 'DESC']
+                 ]
             })
              return result
          } catch (err) {
@@ -38,7 +43,7 @@
      },
      index: async(req, res) => {
 
-        var data = await main_component()
+        var data = await main_component(req)
         data.orders = await Product.findAll(
             { 
                 include: ProductCategory,
@@ -49,7 +54,7 @@
         //  res.status(200).json(data)
      },
      detail: async(req, res) => {
-        var data = await main_component()
+        var data = await main_component(req)
         data.content = await Product.findOne({ 
             include: ProductCategory,
             where: { id: req.params.id }
@@ -64,7 +69,7 @@
         res.redirect('/product')
     },
     create: async(req, res) => {
-        var data = await main_component()
+        var data = await main_component(req)
         data.content = {
             productCategory: await ProductCategory.findAll()
         }
@@ -88,7 +93,7 @@
             })
     },
     update: async(req, res) => {
-        var data = await main_component()
+        var data = await main_component(req)
         data.content = {
             detail: await Product.findOne({ include: ProductCategory, where: { id: req.params.id } }),
             productCategory: await ProductCategory.findAll()

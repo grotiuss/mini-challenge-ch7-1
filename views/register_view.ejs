@@ -1,8 +1,9 @@
 <%- include('partials/header') %>
+<link rel="stylesheet" href="/stylesheets/auth/register_page.css">
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand me-md-5" href="/">
                 <img src="https://ecs7.tokopedia.net/assets-tokopedia-lite/v2/zeus/production/e5b8438b.svg" alt="Logo.svg">
@@ -11,7 +12,20 @@
     </nav>
 
     <div class="container mt-md-4">
-
-<h1>Register Page</h1>
+        <div class="wrapper">
+            <div class="text-center mt-3"> <img src="https://ecs7.tokopedia.net/assets-tokopedia-lite/v2/zeus/production/e5b8438b.svg" alt=""> </div>
+            <div class="" style="padding-left: 5em; padding-right: 5em;">
+                <p class="text-end"><b>Register</b></p>
+            </div>
+            <div class="mt-3">
+                <p id="login-note" class="text-center">Register page Note</p>
+                <form class="p-3" action="/auth/register" method="post">
+                    <div class="form-field d-flex align-items-center"> <span class="far fa-user"></span> <input type="text" name="username" id="username" placeholder="Username" required> </div>
+                    <div class="form-field d-flex align-items-center"> <span class="fas fa-key"></span> <input type="password" name="password" id="password" placeholder="Password" required> </div> 
+                    <button class="btn mt-3">Submit</button>
+                </form>
+            </div>
+            <div class="text-center fs-6">Click  <a href="/auth/login">Sign in</a> ! If you already have account. </div>
+        </div>
 
 <%- include('partials/footer') %>
