@@ -9,13 +9,13 @@
  const navbarInformation = require('./api/navbarInformation')
 
  const main_component = async(req) => {
-     return {
-        title: 'Reviews',
+    return {
+        title: 'Reviews',  
         categories: await navbarInformation.get_category(),
-        user_session: await navbarInformation.get_user_session(req.user_session.id),
-        order_count: await navbarInformation.get_order_count(req.user_session.id)
-     }
- }
+        user_session: navbarInformation.get_user_session(req.user),
+        order_count: await navbarInformation.get_order_count(req.user)
+    }
+}
  
  const f = {
     // for handling missing column error on Review Model :( 
