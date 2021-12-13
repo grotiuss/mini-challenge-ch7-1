@@ -87,7 +87,13 @@
                 username : req.body.username,
                 password : req.body.password,
             }
-            res.status(200).json(input)
+            await User.register({
+                username: input.username,
+                password: input.password
+            })
+                .then(() => {
+                    res.redirect('/auth/login')
+                })
         } catch (error){
             res.status(500).json(
                 { msg: 'registerPost method in authContoller is error' }
