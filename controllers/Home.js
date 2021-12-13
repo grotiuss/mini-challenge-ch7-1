@@ -66,10 +66,10 @@ const f = {
 
 const main_component = async(req) => {
     return {
-        title: 'Home',
+        title: 'Home',  
         categories: await navbarInformation.get_category(),
-        user_session: await navbarInformation.get_user_session(req.user_session.id),
-        order_count: await navbarInformation.get_order_count(req.user_session.id)
+        user_session: navbarInformation.get_user_session(req.user),
+        order_count: await navbarInformation.get_order_count(req.user)
     }
 }
 
@@ -84,6 +84,7 @@ const home = {
                 newProductList: await f.get_new_products(),
                 bestSellingProductList: await f.get_counted_products()
             }
+            console.log(data)
             res.render('home_view', data)
             // res.status(200).json(data)
         } catch (error) {
