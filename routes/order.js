@@ -6,10 +6,13 @@ const { User, Product, Order, ProductCategory } = require('../models')
 
 const orderController = require('../controllers/Order')
 
+//middlewares
+const restrict = require('../middlewares/restrict')
+
 
 router.get('/', orderController.index)
 router.get('/create', orderController.create)
-router.get('/add/:id', orderController.orderProduct)
+router.get('/add/:id', restrict, orderController.orderProduct)
 router.get('/detail/:id', orderController.detail)
 router.get('/detail', orderController.detailInvalid)
 router.get('/update/done/:id', orderController.updateDone)
