@@ -56,14 +56,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 //   next()
 // }, homeRouter);
 
+const restrict = require('./middlewares/restrict')
+
 app.use('/', homeRouter)
 
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
 
-app.use('/review', reviewRouter);
+app.use('/review', restrict, reviewRouter);
+app.use('/order', restrict, orderRouter);
+
 app.use('/product', productRouter);
-app.use('/order', orderRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
