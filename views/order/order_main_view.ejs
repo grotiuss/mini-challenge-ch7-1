@@ -1,4 +1,5 @@
 <%- include('../partials/header') %>
+<link rel="stylesheet" href="/stylesheets/order/order_main.css">
 </head>
 
 <%- include('../partials/navbar') %>
@@ -62,7 +63,9 @@
                             <a href="/order/update/cancel/<%= order.id %>" type="button" class="btn btn-warning btn-sm">Cancel</a>
                         <% } else if( order.transaction_status == 'CANCELED' ) {%>
                             <a href="/order/delete/<%= order.id %>" type="button" class="btn btn-danger btn-sm">Delete</a>
-                        <% } %>
+                        <% } else if (order.transaction_status == 'DONE') {%>
+                            <a href="/order/add-review/<%= order.id %>" type="button" class="btn btn-light btn-sm">Add Review</a>
+                        <% }%>
                     </td>
                 </tr>
             <% }) %>

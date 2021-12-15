@@ -1,0 +1,14 @@
+.btn {
+    border: 1px solid transparent;
+    border-radius: 0px;
+    /* padding: 10px; */
+}
+
+.btn:hover {
+    box-shadow: 3px 3px black;
+}
+
+.button:active {
+    background-color: white;
+    transform: translateY(4px);
+}
