@@ -1,0 +1,41 @@
+<div class="container">
+    <table class="table mt-3">
+        <thead>
+          <tr>
+            <th scope="col">No.</th>
+            <!-- <th scope="col">Id</th> -->
+            <th scope="col">Product Name</th>
+            <!-- <th scope="col">Customer (username)</th> -->
+            <th scope="col">Qty</th>
+            <th scope="col">Price</th>
+            <!-- <th scope="col">Status</th> -->
+            <th scope="col"><b>Action</b></th>
+          </tr>
+        </thead>
+        <tbody>
+            <% var no = 0 %>
+            <% content.orders.forEach( order => { %>
+                <tr>
+                    <th scope="row" style="color: grey"><%= ++no %></th>
+                    <!-- <th scope="row"><%= order.id %></th> -->
+                    <td><%= order.Product.title %></td>
+                    <!-- <td><%= order.User.username %></td> -->
+                    <td><%= order.qty %></td>
+                    <td><%= order.price %></td>
+                    <!-- <td><%= order.transaction_status %></td> -->
+                    <td>
+                        <a href="/order/detail/<%= order.id %>" type="button" class="btn btn-primary btn-sm">Detail</a>
+                        <% if( order.transaction_status == 'WAITING' ) { %>
+                            <a href="/order/update/done/<%= order.id %>" type="button" class="btn btn-success btn-sm">Finish</a>
+                            <a href="/order/update/cancel/<%= order.id %>" type="button" class="btn btn-warning btn-sm">Cancel</a>
+                        <% } else if( order.transaction_status == 'CANCELED' ) {%>
+                            <a href="/order/delete/<%= order.id %>" type="button" class="btn btn-danger btn-sm">Delete</a>
+                        <% } else if (order.transaction_status == 'DONE') {%>
+                            <a href="/order/add-review/<%= order.id %>" type="button" class="btn btn-light btn-sm">Add Review</a>
+                        <% }%>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+      </table>
+</div>

@@ -23,6 +23,13 @@ router.get('/update/cancel', orderController.updateInvalid)
 router.get('/delete/:id', orderController.delete)
 router.get('/delete', orderController.updateInvalid)
 
+//Showing order list
+router.get('/:tabName', orderController.getOrderList)
+
+//for Pagination purposes
+router.get('/:pageNo', orderController.indexWithPage)
+
+
 router.post('/create', orderController.createInput)
 
 module.exports = router;

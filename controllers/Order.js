@@ -26,6 +26,10 @@
          } catch (err) {
             return 'f.total_price error'
          }
+     },
+     showingOrderByPageNo: (no) => {
+         var totalItem = 20;
+         return totalItem;
      }
  }
  
@@ -36,34 +40,6 @@
      index: async(req, res) => {
          try {
              var data = await main_component(req)
-
-             if(data.user_session.id) {
-                 data.content = {
-                    orders : await Order.findAll({
-                        where: { user_id: data.user_session.id },
-                        include: [
-                            {model: Product},
-                            {model: User}
-                        ],
-                        order: [
-                            ['updatedAt', 'DESC']
-                        ]
-                    })
-                 }    
-             } else {
-                 data.content = {
-                     orders : await Order.findAll({
-                         include: [
-                             {model: Product},
-                             {model: User}
-                         ],
-                         order: [
-                             ['updatedAt', 'DESC']
-                         ]
-                     })
-                 }
-             }
-
              res.render('order/order_main_view', data)
 
             // res.status(200).json(data.content.orders)
@@ -73,6 +49,66 @@
                 err: err
             })
          }
+     },
+     getOrderList: async(req, res) => {
+        try{
+            var tabData = await main_component(req)
+
+            //Selecting transaction status
+            switch(req.params.tabName) {
+                case 'WAITING':
+                    var transactionStatus = 'WAITING';
+                    break;
+                case 'FINISH':
+                    var transactionStatus = 'DONE';
+                    break;
+                case 'CANCELED':
+                    var transactionStatus = 'CANCELED';
+                    break;
+                default:
+                    var transactionStatus = 'WAITING';
+            }
+
+            tabData.content = {
+                orders : await Order.findAll({
+                    where: {
+                        user_id: tabData.user_session.id,
+                        transaction_status: transactionStatus
+                    },
+                    include: [
+                        {model: Product},
+                        {model: User}
+                    ],
+                    order: [
+                        ['updatedAt', 'DESC']
+                    ]
+                })
+            }
+
+            res.render('order/order_list_view', tabData);
+        } catch (error) {
+            res.status(500).json(
+                {
+                    msg: 'getOrderList method is error'
+                }
+            )
+        }
+     },
+     indexWithPage: async(req, res) => {
+        try{
+            var data = await main_component(req)
+            data.content = {
+                pageNo: req.params.pageNo,
+                msg: 'method berjalan dengan baik'
+            }
+            res.status(200).json(data);
+        } catch (err) {
+            res.status(500).json(
+                {
+                    msg: 'indexWithPage method error'
+                }
+            )
+        }
      },
      create: async(req, res) => {
          try{

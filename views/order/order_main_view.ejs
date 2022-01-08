@@ -13,65 +13,95 @@
             <a href="/order/create" type="button" class="btn btn-dark btn-sm">Create Order</a>
         </div>
     </div>
-    <table class="table mt-3">
-        <thead>
-          <tr>
-            <th scope="col">No.</th>
-            <th scope="col">Id</th>
-            <th scope="col">Product Name</th>
-            <th scope="col">Customer (username)</th>
-            <th scope="col">Qty</th>
-            <th scope="col">Price</th>
-            <th scope="col">Status</th>
-            <th scope="col"><b>Action</b></th>
-          </tr>
-        </thead>
-        <tbody>
-            <% var no = 0 %>
-            <% content.orders.forEach( order => { %>
-                <tr>
-                    <th scope="row" style="color: grey"><%= ++no %></th>
-                    <th scope="row"><%= order.id %></th>
-                    <td><%= order.Product.title %></td>
-                    <td><%= order.User.username %></td>
-                    <td><%= order.qty %></td>
-                    <td><%= order.price %></td>
-                    <td><%= order.transaction_status %></td>
-                    <td>
-                        <!-- <div class="row justify-content-start">
-                            <div class="col-4">
-                                <a href="/order/detail/<%= order.id %>" type="button" class="btn btn-primary btn-sm">Detail</a>
-                            </div>
+    
 
-                            <% if( order.transaction_status == 'WAITING' ) { %>
-                                <div class="col-4">
-                                    <a href="/order/update/done/<%= order.id %>" type="button" class="btn btn-danger btn-sm">Finish</a>
-                                </div>
-                                <div class="col-4">
-                                    <a href="/order/update/cancel/<%= order.id %>" type="button" class="btn btn-danger btn-sm">Cancel</a>
-                                </div>
-                            <% } else if( order.transaction_status == 'CANCELED' ) {%>
-                                <div class="col-4">
-                                    <a href="/order/update/cancel/<%= order.id %>" type="button" class="btn btn-danger btn-sm">Delete</a>
-                                </div>
-                            <% } %>
-                        </div> -->
+    <!-- List -->
+    <div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" id='waiting-order-list-tab' href='#'>Waiting</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id='finish-order-list-tab' href='#'>Finish</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id='canceled-order-list-tab' href='#'>Canceled</a>
+            </li>
+          </ul>
+    </div>
 
-                        <a href="/order/detail/<%= order.id %>" type="button" class="btn btn-primary btn-sm">Detail</a>
-                        <% if( order.transaction_status == 'WAITING' ) { %>
-                            <a href="/order/update/done/<%= order.id %>" type="button" class="btn btn-success btn-sm">Finish</a>
-                            <a href="/order/update/cancel/<%= order.id %>" type="button" class="btn btn-warning btn-sm">Cancel</a>
-                        <% } else if( order.transaction_status == 'CANCELED' ) {%>
-                            <a href="/order/delete/<%= order.id %>" type="button" class="btn btn-danger btn-sm">Delete</a>
-                        <% } else if (order.transaction_status == 'DONE') {%>
-                            <a href="/order/add-review/<%= order.id %>" type="button" class="btn btn-light btn-sm">Add Review</a>
-                        <% }%>
-                    </td>
-                </tr>
-            <% }) %>
-        </tbody>
-      </table>
+    <div id='order-list'>
+    </div>
 </div>
 
+<!-- Selected TAB -->
+<script type="text/javascript">
+    var base_url = window.location.origin;
+
+    //Dipilih waitng-order-tab secara default
+    $(document).ready(function () {
+        $('#waiting-order-list-tab').addClass('active');
+        $.ajax({
+            url:base_url + '/order/WAITING',
+            beforeSend: function(){
+                $("#order-list").html('Loading...');
+            },
+            success: function(html){
+                $("#order-list").html(html);
+            }
+        });
+    });
+
+    //finish-order-list-tab
+    $('#finish-order-list-tab').click(function () {
+        $('#finish-order-list-tab').addClass('active');
+        $('#waiting-order-list-tab').removeClass('active');
+        $('#canceled-order-list-tab').removeClass('active');
+
+        $.ajax({
+            url:base_url + '/order/FINISH',
+            beforeSend: function(){
+                $("#order-list").html('Loading...');
+            },
+            success: function(html){
+                $("#order-list").html(html);
+            }
+        });
+    })
+
+    //waiting-order-list-tab
+    $('#waiting-order-list-tab').click(function () {
+        $('#finish-order-list-tab').removeClass('active');
+        $('#waiting-order-list-tab').addClass('active');
+        $('#canceled-order-list-tab').removeClass('active');
+
+        $.ajax({
+            url:base_url + '/order/WAITING',
+            beforeSend: function(){
+                $("#order-list").html('Loading...');
+            },
+            success: function(html){
+                $("#order-list").html(html);
+            }
+        });
+    })
+
+    //canceled-order-list-tab
+    $('#canceled-order-list-tab').click(function () {
+        $('#finish-order-list-tab').removeClass('active');
+        $('#waiting-order-list-tab').removeClass('active');
+        $('#canceled-order-list-tab').addClass('active');
+
+        $.ajax({
+            url:base_url + '/order/CANCELED',
+            beforeSend: function(){
+                $("#order-list").html('Loading...');
+            },
+            success: function(html){
+                $("#order-list").html(html);
+            }
+        });
+    })
+</script>
 
 <%- include('../partials/footer') %>
